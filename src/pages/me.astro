@@ -1,0 +1,78 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+
+const me = await getEntry('pages', 'me');
+if (!me) throw new Error('Me page not found');
+const { Content } = await me.render();
+---
+
+<Layout title="Cecilia Pfaff | World Wide Web Commercial">
+  <section class="me">
+    <h1 class="me-title">{me.data.title}</h1>
+    <div class="me-body">
+      {me.data.photo && (
+        <img src={me.data.photo} alt="Cecilia Pfaff" class="me-photo" />
+      )}
+      <div class="me-text">
+        <Content />
+      </div>
+    </div>
+    {me.data.instagram && (
+      <p class="me-instagram">{me.data.instagram}</p>
+    )}
+  </section>
+</Layout>
+
+<style>
+  .me {
+    max-width: 700px;
+    margin: 4rem auto;
+    padding: 0 2rem 6rem;
+  }
+
+  .me-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--text);
+    margin: 0 0 2rem;
+  }
+
+  .me-body {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+
+  .me-photo {
+    width: 220px;
+    flex-shrink: 0;
+  }
+
+  .me-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .me-text p {
+    margin: 0;
+  }
+
+  .me-instagram {
+    margin: 1.5rem 0 0;
+    color: var(--accent);
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 600px) {
+    .me-body {
+      flex-direction: column;
+    }
+
+    .me-photo {
+      width: 100%;
+    }
+  }
+</style>

@@ -7,6 +7,6 @@
     {"image": "/images/9864e360ee5561d6cd4b43035254c993ea98aef6.jpg"},
     {"image": "/images/30b4a34dc8cf0a41937bc57f091979e936a84617.jpg"}
   ],
-  "tags": []
+
 }
 ---

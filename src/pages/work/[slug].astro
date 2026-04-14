@@ -16,11 +16,10 @@ const { Content } = await work.render();
 
 <Layout title={`${work.data.title} | World Wide Web Commercial`}>
   <section class="work-detail">
-    <a href="/" class="back-link">← Back to works</a>
+    <a href="/works" class="back-link">← Works</a>
 
     <header class="work-header">
       <h1 class="work-title">{work.data.title}</h1>
-      <p class="work-year">{work.data.year}</p>
       {work.data.description && (
         <p class="work-description">{work.data.description}</p>
       )}
@@ -44,15 +43,16 @@ const { Content } = await work.render();
 
 <style>
   .work-detail {
-    padding: 2rem 0 4rem;
-    max-width: 1200px;
+    max-width: 680px;
     margin: 0 auto;
+    padding: 2rem 2rem 6rem;
   }
 
   .back-link {
     display: inline-block;
     margin-bottom: 2rem;
     color: var(--accent);
+    font-size: 0.9rem;
   }
 
   .back-link:hover {
@@ -60,32 +60,26 @@ const { Content } = await work.render();
   }
 
   .work-header {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
 
   .work-title {
-    font-size: 3rem;
-    font-weight: 300;
-    margin: 0;
-  }
-
-  .work-year {
     font-size: 1.5rem;
-    color: var(--accent);
-    margin: 0.5rem 0;
+    font-weight: 400;
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
   }
 
   .work-description {
-    font-size: 1.1rem;
-    color: var(--text);
-    margin: 1rem 0 0;
-    max-width: 700px;
+    font-size: 1rem;
+    color: var(--accent);
+    margin: 0.75rem 0 0;
   }
 
   .work-images {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
   }
 
   .work-image {
@@ -100,17 +94,7 @@ const { Content } = await work.render();
   figcaption {
     text-align: center;
     color: var(--accent);
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-  }
-
-  @media (max-width: 768px) {
-    .work-title {
-      font-size: 2rem;
-    }
-
-    .work-year {
-      font-size: 1.2rem;
-    }
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
   }
 </style>

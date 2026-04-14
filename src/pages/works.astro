@@ -1,0 +1,131 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allWorks = (await getCollection('works'))
+  .sort((a, b) => b.data.year - a.data.year || a.data.title.localeCompare(b.data.title));
+---
+
+<Layout title="Works | World Wide Web Commercial">
+  <div class="works-wrap">
+    <div class="works-masonry">
+      {allWorks.map((work) => (
+        work.data.images[0]?.image && (
+          <a
+            href={`/work/${work.slug}`}
+            class="work-item"
+            data-images={JSON.stringify(work.data.images.map(i => i.image))}
+          >
+            <img
+              src={work.data.images[0].image}
+              alt={work.data.images[0].alt || work.data.title}
+              loading="lazy"
+            />
+          </a>
+        )
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .works-wrap {
+    padding: 2rem 14rem;
+  }
+
+  .works-masonry {
+    position: relative;
+  }
+
+  .work-item {
+    position: absolute;
+    display: block;
+  }
+
+  .work-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: opacity 0.15s;
+  }
+
+  .work-item:hover img {
+    opacity: 0.85;
+  }
+
+  @media (max-width: 900px) {
+    .works-wrap {
+      padding: 2rem 4rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .works-wrap {
+      padding: 1rem 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  const GAP = 8;
+
+  function getCols() {
+    return window.innerWidth <= 600 ? 2 : 3;
+  }
+
+  function runMasonry() {
+    const container = document.querySelector<HTMLElement>('.works-masonry');
+    if (!container) return;
+    const items = Array.from(container.querySelectorAll<HTMLElement>('.work-item'));
+    const cols = getCols();
+    const totalWidth = container.clientWidth;
+    const colWidth = (totalWidth - GAP * (cols - 1)) / cols;
+    const colHeights = new Array(cols).fill(0);
+
+    items.forEach((item) => {
+      item.style.width = colWidth + 'px';
+      // find shortest column
+      const minH = Math.min(...colHeights);
+      const col = colHeights.indexOf(minH);
+      item.style.left = col * (colWidth + GAP) + 'px';
+      item.style.top = colHeights[col] + 'px';
+      colHeights[col] += item.offsetHeight + GAP;
+    });
+
+    container.style.height = Math.max(...colHeights) + 'px';
+  }
+
+  // Wait for all images, then layout
+  function init() {
+    const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('.work-item img'));
+    const promises = imgs.map(img =>
+      img.complete ? Promise.resolve() : new Promise(r => { img.onload = r; img.onerror = r; })
+    );
+    Promise.all(promises).then(runMasonry);
+  }
+
+  init();
+  window.addEventListener('resize', runMasonry);
+
+  // Hover: cycle through images
+  document.querySelectorAll<HTMLAnchorElement>('.work-item').forEach((item) => {
+    const images: string[] = JSON.parse(item.dataset.images || '[]');
+    if (images.length <= 1) return;
+    const img = item.querySelector('img') as HTMLImageElement;
+    let interval: ReturnType<typeof setInterval> | null = null;
+    let index = 0;
+
+    item.addEventListener('mouseenter', () => {
+      index = 0;
+      interval = setInterval(() => {
+        index = (index + 1) % images.length;
+        img.src = images[index];
+      }, 600);
+    });
+
+    item.addEventListener('mouseleave', () => {
+      if (interval) clearInterval(interval);
+      img.src = images[0];
+    });
+  });
+</script>

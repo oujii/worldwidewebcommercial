@@ -5,6 +5,6 @@
   "images": [
     {"image": "/images/dee456417ea3b68825f15f86ee1065adcd87ccc6.jpg"}
   ],
-  "tags": []
+
 }
 ---

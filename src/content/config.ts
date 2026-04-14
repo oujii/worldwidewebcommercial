@@ -10,8 +10,16 @@ const works = defineCollection({
       image: z.string(),
       alt: z.string().optional(),
     })),
-    tags: z.array(z.string()).default([]),
   }),
 });
 
-export const collections = { works };
+const pages = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    photo: z.string().optional(),
+    instagram: z.string().optional(),
+  }),
+});
+
+export const collections = { works, pages };

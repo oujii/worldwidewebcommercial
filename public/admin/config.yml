@@ -19,8 +19,18 @@ collections:
       - label: "Images"
         name: "images"
         widget: "list"
-        typeset: false
         fields:
           - {label: "Image", name: "image", widget: "image"}
           - {label: "Alt Text", name: "alt", widget: "string", required: false}
-      - {label: "Tags", name: "tags", widget: "list", required: false}
+
+  - name: "pages"
+    label: "Pages"
+    files:
+      - name: "me"
+        label: "About (Me)"
+        file: "src/content/pages/me.md"
+        fields:
+          - {label: "Heading", name: "title", widget: "string"}
+          - {label: "Photo", name: "photo", widget: "image", required: false}
+          - {label: "Instagram", name: "instagram", widget: "string", required: false}
+          - {label: "Bio", name: "body", widget: "markdown"}
