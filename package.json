@@ -1,0 +1,22 @@
+{
+  "name": "worldwidewebcommercial",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/netlify": "^6.2.0",
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^5.1.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.5",
+    "@types/node": "^22.13.10",
+    "typescript": "^5.8.2"
+  }
+}
