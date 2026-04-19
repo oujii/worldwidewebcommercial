@@ -25,7 +25,11 @@ const { Content } = await work.render();
       )}
     </header>
 
-    <div class="work-images">
+    <div class="work-loading" id="work-loading">
+      <span class="loading-dot">·</span><span class="loading-dot">·</span><span class="loading-dot">·</span>
+    </div>
+
+    <div class="work-images" id="work-images" style="opacity:0">
       {work.data.images.map((img) => (
         <figure class="work-image">
           <img
@@ -40,6 +44,19 @@ const { Content } = await work.render();
     <Content />
   </section>
 </Layout>
+
+<script>
+  const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('.work-image img'));
+  const promises = imgs.map(img =>
+    img.complete ? Promise.resolve() : new Promise(r => { img.onload = r; img.onerror = r; })
+  );
+  Promise.all(promises).then(() => {
+    const loader = document.getElementById('work-loading');
+    const images = document.getElementById('work-images');
+    if (loader) loader.style.display = 'none';
+    if (images) images.style.opacity = '1';
+  });
+</script>
 
 <style>
   .work-detail {
@@ -80,6 +97,30 @@ const { Content } = await work.render();
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    transition: opacity 0.35s ease;
+  }
+
+  .work-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    height: 40vh;
+    color: var(--accent);
+    font-size: 2rem;
+    letter-spacing: 0.2rem;
+  }
+
+  .loading-dot {
+    animation: blink 1.2s infinite;
+  }
+
+  .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes blink {
+    0%, 80%, 100% { opacity: 0.15; }
+    40% { opacity: 1; }
   }
 
   .work-image {

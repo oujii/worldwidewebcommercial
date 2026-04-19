@@ -64,6 +64,20 @@ const { title = 'World Wide Web Commercial' } = Astro.props;
       }
     </style>
 
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      const ni = (window as any).netlifyIdentity;
+      if (ni) {
+        ni.on("init", function(user: any) {
+          if (!user) {
+            ni.on("login", function() {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
+
     <style>
       .site-nav {
         display: flex;
