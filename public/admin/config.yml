@@ -11,6 +11,7 @@ collections:
     label_singular: "Work"
     folder: "src/content/works"
     create: true
+    format: json-frontmatter
     slug: "{{year}}-{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
