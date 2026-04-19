@@ -1,6 +1,6 @@
 ---
-title: "Who is she?"
-photo: "/images/cecilia-portrait.png"
+title: Who is she?
+photo: /images/me.jpg
 instagram: "@lil_knotty"
 ---
 
